@@ -1,0 +1,69 @@
+<main>
+  <section class="content">
+    <header class="top-content">
+      <h1 class="section-title">Каталог фильмов</h1>
+      <div class="search">
+        <input
+          type="text"
+          [(ngModel)]="search"
+          (ngModelChange)="getFilmsByName($event)"
+          placeholder="Поиск фильмов..."
+        />
+      </div>
+    </header>
+
+    <section class="films">
+
+      @if (isLoading) {
+        <p>Загрузка...</p>
+      }
+
+      @if (films.length > 0) {
+        <div class="movie-grid">
+          @for (film of films; track film.id) {
+
+            <div
+              class="movie-card"
+              (click)="selectedFilm = film"
+            >
+
+              @if (film.poster) {
+                <img src="{{ film.poster.previewUrl }}"/>
+              }
+              <!-- заглушка в виде картинки не найдено -->
+              <h2>{{ film.name }}</h2>
+              <p>{{ film.year }}</p>
+            </div>
+          }
+        </div>
+      }
+    </section>
+  </section>
+
+  @if (selectedFilm) {
+    <div class="modal-overlay" (click)="selectedFilm = null">
+      <div class="modal-content">
+        <span class="modal-close" (click)="selectedFilm = null">✕</span>
+        <div class="modal-body">
+          <div class="modal-info">
+            <h2>{{ selectedFilm.name }}</h2>
+            <p><strong>Год:</strong> {{ selectedFilm.year }}</p>
+            <p>
+              <strong>Жанр:</strong>
+              @for (genre of selectedFilm.genres; track genre.name) {
+                {{ genre.name || 'Неизвестно' }}
+              }
+            </p>
+            <p class="plot">{{ selectedFilm.description || 'Описание недоступно' }}</p>
+          </div>
+
+          <div class="modal-poster">
+            @if (selectedFilm.poster) {
+              <img src="{{ selectedFilm.poster.previewUrl }}"/>
+            }
+          </div>
+        </div>
+      </div>
+    </div>
+  }
+</main>
