@@ -19,7 +19,10 @@
       }
 
       @if (error) {
-        <p>{{ this.errorMessage }}</p>
+        <div class="error">
+          <p>Ошибка</p>
+          <p>{{ this.errorMessage }}</p>
+        </div>
       }
 
       @if (films.length > 0) {

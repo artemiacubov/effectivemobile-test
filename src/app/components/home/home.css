@@ -54,6 +54,10 @@ main {
   text-align: center;
 }
 
+.error {
+  text-align: center;
+}
+
 .films {
   display: flex;
   justify-content: center;
