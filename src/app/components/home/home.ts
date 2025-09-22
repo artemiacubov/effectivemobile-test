@@ -19,10 +19,13 @@ export class Home implements OnInit {
   films: IFilm[] = [];
   search: string = '';
   isLoading = false;
+  error = false;
+  errorMessage: string = '';
   selectedFilm: IFilm | null = null;
 
-  constructor(public apiService: ApiService) {
-  }
+  noImageSrc = 'https://tookametex.kz/wa-data/public/site//themes/default/img/empty.png'
+
+  constructor(public apiService: ApiService) {}
 
   ngOnInit() {
     this.getFilmsByName('')
@@ -31,15 +34,20 @@ export class Home implements OnInit {
   getFilmsByName(name: string) {
 
     this.films = []
+    this.error = false
     this.isLoading = true
 
     this.apiService.getFilmsByName(LIMIT, PAGE, name)
       .pipe(
-        finalize(() => (this.isLoading = false))
+        finalize(()=> (this.isLoading = false))
       )
       .subscribe({
-        next: ({docs}) => this.films = docs
+        next: ({docs}) => this.films = docs,
+        error: (err) => {
+          this.error = true
+          this.errorMessage = err
+        }
       })
-    console.log(name)
   }
+
 }

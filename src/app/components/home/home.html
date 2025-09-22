@@ -18,6 +18,10 @@
         <p>Загрузка...</p>
       }
 
+      @if (error) {
+        <p>{{ this.errorMessage }}</p>
+      }
+
       @if (films.length > 0) {
         <div class="movie-grid">
           @for (film of films; track film.id) {
@@ -28,9 +32,8 @@
             >
 
               @if (film.poster) {
-                <img src="{{ film.poster.previewUrl }}"/>
+                <img src="{{ film.poster.previewUrl || noImageSrc }}"/>
               }
-              <!-- заглушка в виде картинки не найдено -->
               <h2>{{ film.name }}</h2>
               <p>{{ film.year }}</p>
             </div>
@@ -59,7 +62,7 @@
 
           <div class="modal-poster">
             @if (selectedFilm.poster) {
-              <img src="{{ selectedFilm.poster.previewUrl }}"/>
+              <img src="{{ selectedFilm.poster.previewUrl || noImageSrc }}"/>
             }
           </div>
         </div>
