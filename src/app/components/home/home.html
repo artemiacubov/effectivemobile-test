@@ -35,7 +35,7 @@
             >
 
               @if (film.poster) {
-                <img src="{{ film.poster.previewUrl || noImageSrc }}"/>
+                <img src="{{ film.poster.previewUrl || noImageSrc }}" alt="{{film.name}}"/>
               }
               <h2>{{ film.name }}</h2>
               <p>{{ film.year }}</p>
@@ -65,7 +65,7 @@
 
           <div class="modal-poster">
             @if (selectedFilm.poster) {
-              <img src="{{ selectedFilm.poster.previewUrl || noImageSrc }}"/>
+              <img src="{{ selectedFilm.poster.previewUrl || noImageSrc }}" alt="{{selectedFilm.name}}"/>
             }
           </div>
         </div>
